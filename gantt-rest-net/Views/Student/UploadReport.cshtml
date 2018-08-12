@@ -1,0 +1,251 @@
+﻿
+@{
+    ViewBag.Title = "UploadReport";
+    
+}
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Thesis Management Software</title>
+    <meta name="description" content="website description" />
+    <meta name="keywords" content="website keywords, website keywords" />
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+    <link rel="stylesheet" type="text/css" href="~/style/style.css" title="style" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="~/Content/themes/new.css" rel="stylesheet" />
+    <link href="~/Content/themes/newmin.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/morris.css" rel="stylesheet" />
+    <link href="~/Content/themes/font.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Content/js/bootstrap.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .table {
+            background-color: transparent;
+        }
+
+        #main, #logo, #menubar, #site_content, #footer {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #footer {
+            height: 62px;
+        }
+          .logout {
+            position: relative;
+            text-align: right;
+            margin: auto;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div id="header">
+            <div class="container-fluid">
+
+            </div>
+            <div class="logout">
+                <a style="color:white; font-size:medium" href=@Url.Action("Logout","Account")>Çıkış Yap</a>
+            </div>
+
+            <div id="logo">
+
+                <br /><br>
+                <h2 style="color:white; text-align:center">Dokuz Eylül Üniversitesi</h2>
+
+
+
+
+                <div id="logo_text">
+
+                    <!-- class="logo_colour", allows you to change the colour of the text -->
+
+                </div>
+            </div>
+        </div>
+            <div id="menubar">
+                <ul id="menu">
+                    <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+                    <li><a style="height:72px" href="@Url.Action("CreateReport", "Student")">Rapor Ekle</a></li>
+                    <li><a style="height:72px" href="@Url.Action("ShowGanttChart", "Student")">Gantt Chart Görüntüle</a></li>
+                    @*<li><a style="height:72px" href="@Url.Action("UploadReport", "Student")">Rapor Yükle</a></li>*@
+
+                </ul>
+            </div>
+        
+
+        <div id="site_content" style=" width: 898px; height: 177px;">
+
+            <div id="content">
+                <!-- insert the page content here -->
+                <div class="text-center">
+                    <h2>Rapor Yükle</h2>
+                </div>
+               
+
+                        <form method="POST" action="#" enctype="multipart/form-data">
+                            <!-- COMPONENT START -->
+                            <div class="form-group">
+                                <div class="input-group input-file" name="Fichier1">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default btn-choose" type="button">Choose</button>
+                                    </span>
+                                    <input type="text" class="form-control" placeholder='Choose a file...' />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-warning btn-reset" type="button">Reset</button>
+                                    </span>
+                           
+                            <!-- COMPONENT END -->
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary pull-right" disabled>Submit</button>
+
+                            </div>
+</div>
+                        </form>
+
+                    </div>
+                </div>
+                  
+        </div>
+        <div id="content_footer"></div>
+        <div id="footer">
+            Copyright &copy; @*colour_blue*@
+        </div>
+  
+</body>
+</html>
+
+<script src="js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Morris Charts JavaScript -->
+<script src="js/plugins/morris/raphael.min.js"></script>
+<script src="js/plugins/morris/morris.min.js"></script>
+<script src="js/plugins/morris/morris-data.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script>
+    function bs_input_file() {
+        $(".input-file").before(
+            function () {
+                if (!$(this).prev().hasClass('input-ghost')) {
+                    var element = $("<input type='file' class='input-ghost' style='visibility:hidden; height:0'>");
+                    element.attr("name", $(this).attr("name"));
+                    element.change(function () {
+                        element.next(element).find('input').val((element.val()).split('\\').pop());
+                    });
+                    $(this).find("button.btn-choose").click(function () {
+                        element.click();
+                    });
+                    $(this).find("button.btn-reset").click(function () {
+                        element.val(null);
+                        $(this).parents(".input-file").find('input').val('');
+                    });
+                    $(this).find('input').css("cursor", "pointer");
+                    $(this).find('input').mousedown(function () {
+                        $(this).parents('.input-file').prev().click();
+                        return false;
+                    });
+                    return element;
+                }
+            }
+        );
+    }
+    $(function () {
+        bs_input_file();
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<html>
+<head>
+    <title>Upload Example</title>
+    <script src="~/Scripts/jquery-2.1.0.intellisense.js"></script>
+    <script src="~/Scripts/jquery-2.1.0.js"></script>
+    <script src="~/Scripts/jquery-2.1.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.0.min.js"
+            integrity="sha256-8oQ1OnzE2X9v4gpRVRMb1DWHoPHJilbur1LP9ykQ9H0="
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.1.0.js"
+            integrity="sha256-D6d1KSapXjq2tfZ6Ie9AYozkRHyB3fT2ys9mO2+4Wvc="
+            crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+    <input type="file" id="FileUpload" multiple />
+    <input type="button" id="Upload" value="Upload" />
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $("#Upload").click(function () {
+            var formData = new FormData();
+            var totalFiles = document.getElementById("FileUpload").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("FileUpload").files[i];
+
+                formData.append("FileUpload", file);
+            }
+            $.ajax({
+                type: "POST",
+                url: '/Student/Upload',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    alert('succes!!');
+                },
+                error: function (error) {
+                    alert("adfff");
+                }
+            });
+        });
+    });
+
+</script>*@

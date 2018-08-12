@@ -1,0 +1,153 @@
+﻿@model IEnumerable<gantt_rest_net.Data.listedProject_Result>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Thesis Management Software</title>
+    <meta name="description" content="website description" />
+    <meta name="keywords" content="website keywords, website keywords" />
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+    <link rel="stylesheet" type="text/css" href="~/style/style.css" title="style" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="~/Content/themes/new.css" rel="stylesheet" />
+    <link href="~/Content/themes/newmin.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/morris.css" rel="stylesheet" />
+    <link href="~/Content/themes/font.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Content/js/bootstrap.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .table {
+            background-color: transparent;
+        }
+
+        #main, #logo, #menubar, #site_content, #footer {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #footer {
+            height: 62px;
+        }
+
+        .login {
+            position: relative;
+            text-align: right;
+            margin: auto;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div id="main">
+        <div id="header">
+            
+            <div class="container-fluid">
+
+            </div>
+            <div class="login">
+                <a style="color:white; font-size:medium" href=@Url.Action("Login","Account")><span class="glyphicon glyphicon-log-in" style="font-size:medium"></span> Giriş Yap</a>
+            </div>
+            <div id="logo">
+             
+                        <br /><br>
+                        <h2 style="color:white; text-align:center" >Dokuz Eylül Üniversitesi</h2>
+                        
+              
+                <div id="logo_text">
+
+                    <!-- class="logo_colour", allows you to change the colour of the text -->
+
+                </div>
+            </div>
+
+        </div>
+        </div>
+    
+    <div id="site_content" style=" width: 898px; height: 100%;">
+
+        <div id="content">
+            <!-- insert the page content here -->
+            <div class="container">
+             
+                    <div class="col-lg-8 col-md-6 col-sm-12 text-center">
+
+                        <h2>2017-2018 Bitirme Tezi Listesi</h2>
+                   
+                </div>
+            </div>
+                <table class="table" style=" width:837px; height:100%;">
+                    <tr>
+                        <th>
+                            Öğrenci Adı
+                        </th>
+                        <th>
+                            Öğrenci Soyadı
+                        </th>
+                        <th>
+                            Danışman Adı
+                        </th>
+                        <th>
+                            Danışman Soyadı
+                        </th>
+                        <th>
+                            Proje Adı
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.studentName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.studentSurname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.supervisorName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.supervisorSurname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.projectName)
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+
+            </div>
+        </div>
+        <div id="content_footer"></div>
+        <div id="footer">
+            Copyright &copy; @*colour_blue*@
+            <!-- | <a href="http://validator.w3.org/check?uri=referer">HTML5</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | <a href="http://www.html5webtemplates.co.uk">design from HTML5webtemplates.co.uk</a> -->
+        </div>
+</body>
+</html>
+
+<script src="js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Morris Charts JavaScript -->
+<script src="js/plugins/morris/raphael.min.js"></script>
+<script src="js/plugins/morris/morris.min.js"></script>
+<script src="js/plugins/morris/morris-data.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>

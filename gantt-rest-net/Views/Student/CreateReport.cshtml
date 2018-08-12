@@ -1,0 +1,577 @@
+﻿@model gantt_rest_net.Models.ReportsViewModel
+@{
+    ViewBag.Title = "CreateReport";
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thesis Management Software</title>
+    <meta name="description" content="website description" />
+    <meta name="keywords" content="website keywords, website keywords" />
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+    <link rel="stylesheet" type="text/css" href="~/style/style.css" title="style" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="~/Content/themes/new.css" rel="stylesheet" />
+    <link href="~/Content/themes/newmin.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/morris.css" rel="stylesheet" />
+    <link href="~/Content/themes/font.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/popup.css" rel="stylesheet" />
+    <script src="~/Content/js/bootstrap.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .table {
+            background-color: transparent;
+        }
+
+        #main, #logo, #menubar, #site_content, #footer {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #footer {
+            height: 62px;
+        }
+
+        .logout {
+            position: relative;
+            text-align: right;
+            margin: auto;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div id="header">
+            <div class="container-fluid">
+
+            </div>
+
+            <div class="logout">
+                <a style="color:white; font-size:medium" href=@Url.Action("Logout","Account")>Çıkış Yap</a>
+            </div>
+
+            <div id="logo">
+
+                <br /><br>
+                <h2 style="color:white; text-align:center">Dokuz Eylül Üniversitesi</h2>
+
+
+                <div id="logo_text">
+
+                    <!-- class="logo_colour", allows you to change the colour of the text -->
+
+                </div>
+            </div>
+        </div>
+        <div id="menubar">
+            <ul id="menu">
+                <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+                <li><a style="height:72px" href="@Url.Action("CreateReport", "Student")">Rapor Ekle</a></li>
+                <li><a style="height:72px" href="@Url.Action("ShowGanttChart", "Student")">Gantt Chart Görüntüle</a></li>
+               
+            </ul>
+        </div>
+
+
+        <div id="site_content" style=" width: 898px; height:100%;">
+
+            <div id="content" style="    width: 100%;    height: 100%;" />
+            <!-- insert the page content here -->
+
+
+
+            <div class="container" style="    width: 100%;    height: 100%;" />
+
+            <form style="height: 100%;" />
+            <div class="form-group" style="height: 100%;" />
+
+            <table style="display:none">
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td colspan="2">
+                                    <button type="button" class="titleUp">^</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                    <button type="button" class="titleLeft"><</button>
+                                </td>
+                                <td colspan="1">
+                                    <button type="button" class="titleRight">></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button type="button" class="titleDown">v</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td colspan="1">
+                                    <button type="button">Başlık Ekle</button>
+                                </td>
+                                <td colspan="1">
+                                    <button type="button">Metin Düzenle</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    @using (Html.BeginForm())
+                                    {
+                                        @*@Html.DisplayNameFor(model => model.reportName)*@
+                                    }
+                                    @*<textarea class="titleList" type="text" rows="5" height="150">1.1
+                                        1.2</textarea>*@
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+
+            <div class="add-buttons">
+                @*<button type="button" class="add-main-section">Add Main Section</button>*@
+                <button type="button" class="add-section">Add Section</button>
+                @*<button type="button" class="add-sub-section">Add Sub Section</button>*@
+                <button type="button" class="add-Paragraph">Add Paragraph</button>
+                <button type="button" class="add-image">Add Image</button>
+                <button type="button" class="add-table">Add Table</button>
+            </div>
+            <hr />
+            <div class="edit-text-area-buttons" style="display:none;">
+                <input class='text-edit-area' />
+                <select class="section-level-selection">
+                    <option value="chapter">Chapter</option>
+                    <option value="chapter-name">Chapter Name</option>
+                    <option value="second-level-section">Second Level Section</option>
+                    <option value="third-level-section">Third Level Section</option>
+                    <option value="fourth-level-section">Fourth Level Section</option>
+                    <option value="fifth-level-section">Fifth Level Section</option>
+                </select>
+                <button type="button" class="save save-buttons">Save</button>
+                <button type="button" class="cancel">Cancel</button>
+            </div>
+            <hr />
+            <div class="edit-paragraph-area" style="display:none; text-align:left;">
+                <textarea class='paragraph-edit-area' style="width:75%;"></textarea>
+                <button type="button" class="save save-buttons">Save</button>
+                <button type="button" class="cancel">Cancel</button>
+            </div>
+            <hr />
+            <div class="table-edit-area" style="display:none;">
+                <table style="width:100%">
+                    <tr>
+                        <td>
+                            <label>Column :</label>
+                            <input class='column-count table-dimension-inputs' />
+                        </td>
+                        <td>
+                            <label>Row :</label>
+                            <input class='row-count table-dimension-inputs' />
+                        </td>
+                        <td colspan="2">
+                            <button type=button class='create-table'>Create Table</button>
+                            <button type=button class='save-table save-buttons'>Save Table</button>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+            </div>
+            <hr />
+            <div class="image-upload-area" style="display:none;">
+                <table style="width:100%;">
+                    <tr>
+                        <td>
+                            <input type="file" id="fileInput" accept="image/*">
+                        </td>
+                        <td>
+                            <button type="button" class="upload-image">Upload Image</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            @Html.TextAreaFor(model => model.ReportData, new { @style = "display:none;" })
+            <div class="main-article">
+
+            </div>
+            @*<select class="form-control" id="sel1" title="Chapter Select">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                </select>
+                <br />
+                <select class="form-control" id="sel2" title="Subchapter Select">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                </select>
+                <br />
+
+                <textarea class="form-controll" rows="20" id="comment"></textarea>*@
+        </div>
+    </div>
+
+
+
+
+
+
+
+    @*<a href="@Url.Action("", "")" class="btn btn-danger"> Save</a>*@
+    <button class="btn btn-danger">Save</button>
+    <button class="btn btn-danger print">Print</button>
+
+    <div id="popupModal" class="popup-modal">
+        <div class="popup-modal-content modal-content">
+            <span class="close-popup">&times;</span>
+            <p class="popup-text"></p>
+        </div>
+    </div>
+
+    <style class="custom">
+        div.add-buttons button {
+            width: 23%;
+        }
+
+        .chapter {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            padding-bottom: 16px;
+            padding-top: 32px;
+        }
+
+        .chapter-name {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            padding-bottom: 8px;
+            padding-top: 8px;
+        }
+
+        .second-level-section {
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+            padding-bottom: 16px;
+            padding-top: 16px;
+        }
+
+        .third-level-section {
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+            font-style: italic;
+            padding-bottom: 16px;
+            padding-top: 16px;
+        }
+
+        .fourth-level-section {
+            text-align: left;
+            font-size: 16px;
+            font-style: italic;
+            padding-bottom: 16px;
+            padding-top: 16px;
+            text-indent: 30px;
+        }
+
+        .fifth-level-section {
+            text-align: left;
+            font-size: 16px;
+            font-style: italic;
+            padding-bottom: 16px;
+            text-indent: 19px;
+        }
+
+        .paragraph {
+            text-align: justify;
+            font-size: 16px;
+            padding-bottom: 6px;
+            text-indent: 19px;
+        }
+    </style>
+    <div id="content_footer"></div>
+    <div id="footer">
+        Copyright &copy; @*colour_blue*@
+        <!-- | <a href="http://validator.w3.org/check?uri=referer">HTML5</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | <a href="http://www.html5webtemplates.co.uk">design from HTML5webtemplates.co.uk</a> -->
+    </div>
+</body>
+</html>
+
+
+<script type="text/javascript">
+
+    // Popup Al
+    var popupModal = document.getElementById('popupModal');
+
+    // Kipi kapatan <span> öğesini edinin
+    var popupCloseButton = document.getElementsByClassName("close-popup")[0];
+
+    // Kullanıcı <span> (x) düğmesini tıkladığında, popup
+    popupCloseButton.onclick = function () {
+        popupModal.style.display = "none";
+    }
+
+    // Kullanıcı modelden başka herhangi bir yeri tıklattıysa, onu kapatın.
+    window.onclick = function (event) {
+        if (event.target == popupModal) {
+            popupModal.style.display = "none";
+        }
+    }
+
+
+    //// Button Auto Height
+    //var buttonCount = $('div.add-buttons button').length;
+    //var buttonWidth = Math.round(100 / buttonCount);
+    //$('div.add-buttons button').css('width', buttonWidth + "%");
+    //// Button Auto Height
+    $('button.save-buttons').click(function () {
+        $('div.main-article').children().click(function () {
+            $(this).attr('contenteditable', 'true');
+        });
+    });
+
+    $('#ReportData').hide();
+    var reportData = $('#ReportData').val();
+    $('div.main-article')[0].innerHTML = reportData;
+
+    $('div.main-article').children().click(function () {
+        $(this).attr('contenteditable', 'true');
+    });
+    $('button.print').click(function () {
+        var newWin = window.open('', 'Print-Window');
+        newWin.document.open();
+        newWin.document.write('<html><body onload="window.print()">' + $('div.main-article')[0].innerHTML + "<style>" + $('style.custom')[0].innerHTML + "</style>" + '</body></html>');
+        newWin.document.close();
+    });
+
+    $('button.btn.btn-danger').click(function () {
+        var popupMessage = '';
+        $.ajax({
+            type: "POST",
+            url: "/Student/SaveReportData",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ 'data': $('div.main-article')[0].innerHTML }),
+            success: function (jsonString) {
+                var response = JSON.parse(jsonString);
+                if (response.result === true) {
+                    popupMessage = 'Saved';
+                }
+                else {
+                    popupMessage = 'Report did\'n saved. </br> This report is out of date. </br> Report Last Updated: ' + response.lastUpdatedDate + '</br> Last Updated By: ' + response.lastUpdatedBy;
+                }
+
+                popupModal.style.display = "block";
+                $('p.popup-text').html(popupMessage);
+                //setTimeout(function () { popupModal.style.display = "none"; }, 3000);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("SaveReportData Result  : fail");
+                console.log("Status                 : textStatus");
+            },
+            done: function (data) {
+
+                console.log("SaveReportData Result  : success");
+                popupModal.style.display = "block";
+                $('p.popup-text').html(popupMessage);
+                setTimeout(function () { popupModal.style.display = "none"; }, 3000);
+            }
+        });
+    });
+
+    //var textEditArea = $('div.text-edit-area');
+    //var mainArticle = $('div.main-article');
+    $('.edit-paragraph-area .save').click(function () {
+        debugger;
+        var value = $('textarea.paragraph-edit-area').val();
+        $('div.main-article').append("<p class='paragraph'>" + value + "</p>");
+        $('.edit-paragraph-area').hide();
+        $('textarea.paragraph-edit-area').val('');
+    });
+    $('.edit-paragraph-area .cancel').click(function () {
+        $('.edit-paragraph-area').hide();
+        $('textarea.paragraph-edit-area').val('');
+    });
+    $('button.add-Paragraph').click(function () {
+        $('.edit-paragraph-area').show();
+    });
+    $('button.add-section').click(function () {
+        //editArea[0].innerHTML = "<input class='edit-area' />";
+        ShowTextEditArea();
+    });
+    $('div.edit-text-area-buttons button.save').click(function () {
+        var value = $('input.text-edit-area').val();
+        var sectionClass = $('.section-level-selection option:selected').val();
+        $('div.main-article')[0].innerHTML += "<div class='" + sectionClass + "'>" + value + "</div>";
+        HideTextEditArea();
+    });
+    $('button.cancel').click(function () {
+        HideTextEditArea();
+    });
+    $('button.add-table').click(function () {
+        //editArea[0].innerHTML = "";
+        ShowTableEditArea();
+    });
+    $('button.create-table').click(function () {
+        var columnCount = $('input.column-count').val();
+        var rowCount = $('input.row-count').val();
+        $('table.edit-table').remove();
+        var html = "<table border='2' style='width:100%;' class='edit-table'>";
+        var width = 100 / columnCount;
+        for (var rowIndexer = 0; rowIndexer < rowCount; rowIndexer++) {
+            html += "<tr>"
+            for (var columnIndexer = 0; columnIndexer < columnCount; columnIndexer++) {
+                html += "<td style='width:" + width + "%;'><div contenteditable></div></td>";
+            }
+            html += "</tr>"
+        }
+        html += "</table>";
+        $('div.table-edit-area').append(html);
+        $('button.save-table').click(function () {
+            $('div.main-article').append($('table.edit-table').removeClass('edit-table').addClass('edited-table'));
+            HideTableEditArea();
+        });
+    });
+    $('button.add-image').click(function () {
+        ShowImageUploadArea();
+    });
+    $('button.upload-image').click(function () {
+        var image = $('#fileInput')[0].files[0];
+        var formData = new FormData();
+        formData.append("fileInput", image);
+        $.ajax({
+            type: "POST",
+            url: "/Student/UploadImage",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (jsonString) {
+                $('div.main-article').append("<div style='text-align: center; margin: 25px;'><img src = '/Content/images/" + jsonString + "' /></div>");
+                HideImageUploadArea();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("UploadImage Result     : fail");
+                console.log("Status                 : textStatus");
+            }
+        });
+    })
+    ShowTextEditArea = function () {
+        $('div.add-buttons button').prop('disabled', true);
+        $('div.edit-text-area-buttons').show();
+        $('input.text-edit-area').focus();
+    }
+    HideTextEditArea = function () {
+        $('div.add-buttons button').prop('disabled', false);
+        $('div.edit-text-area-buttons').hide();
+        $('input.text-edit-area').val('');
+    }
+    ShowTableEditArea = function () {
+        $('div.add-buttons button').prop('disabled', true);
+        $('div.table-edit-area').show();
+    }
+    HideTableEditArea = function () {
+        $('div.add-buttons button').prop('disabled', false);
+        $('div.table-edit-area').hide();
+        $('input.table-dimension-inputs').val('');
+    }
+    HideEditArea = function () {
+        $('tr.add-buttons button').prop('disabled', false);
+        $('tr.edit-buttons').hide();
+        $('input.edit-area').remove();
+    }
+    ShowImageUploadArea = function () {
+        $('tr.add-buttons button').prop('disabled', true);
+        $('div.image-upload-area').show();
+        $('#fileInput').click();
+    }
+    HideImageUploadArea = function () {
+        $('tr.add-buttons button').prop('disabled', false);
+        $('div.image-upload-area').hide();
+    }
+    var titleList = $('textarea.titleList');
+    var selectedLineNumber = -1;
+    var selectedTitle = "";
+    $('textarea.titleList').click(function (e) {
+        var lines = this.value.split('\n');
+        var selection = this.selectionStart;
+        debugger;
+        var totalLinesLength = 0;
+        for (var lineIndexer = 0; lineIndexer < lines.length; lineIndexer++) {
+            var oldLineLenght = totalLinesLength;
+            var newLineLenght = totalLinesLength + lines[lineIndexer].length;
+            totalLinesLength = newLineLenght + 1;
+            if (oldLineLenght < selection && selection <= newLineLenght) {
+                var leftDif = selection - oldLineLenght;
+                var rightDift = newLineLenght - selection;
+                this.focus();
+                this.selectionStart = oldLineLenght;
+                this.selectionEnd = newLineLenght;
+                selectedLineNumber = lineIndexer;
+            }
+        }
+        if (selectedLineNumber < 0) {
+            selectedLineNumber = lines.length;
+        }
+    });
+
+    $('button.titleUp').click(function (e) {
+        var selectedValue = $('select.report-list option:selected')[0].value;
+        //var selectionStart = $('textarea.titleList')[0].selectionStart;
+        //var selectionEnd = $('textarea.titleList')[0].selectionEnd;
+        //var selection = $('textarea.titleList')[0].value.substring(selectionStart, selectionEnd);
+        //var lines = $('textarea.titleList')[0].value.split('\n');
+
+        $.ajax({
+            type: "POST",
+            url: "/Student/UpdateTitle",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ 'selectedValue': selectedValue, actionType: "UP" }),
+            success: function (jsonString) {
+                var json = JSON.parse(jsonString);
+                $("#WrongUserNameLabel").text("");
+                $("#WrongPasswordLabel").text("");
+                $("#WrongUserNameLabel").text(json.wrongUserNameLabel);
+                $("#WrongPasswordLabel").text(json.wrongPasswordLabel);
+                if (json.isRedirect) {
+                    window.location.href = json.redirectUrl;
+                }
+            },
+        });
+
+    })
+</script>
+
+
+
+@*ToDo - CCITE: First, jquery.js should be downloaded if want to jquery.js is imported.*@
+@*<script src="js/jquery.js"></script>*@
+<!-- Bootstrap Core JavaScript -->
+<script src="~/Content/js/bootstrap.min.js"></script>
+<!-- Morris Charts JavaScript -->
+<script src="~/Content/themes/raphael.min.js"></script>
+<script src="~/Content/themes/morris.min.js"></script>
+<script src="~/Content/themes/morris-data.js"></script>
+<script src="~/Content/js/bootstrap.js"></script>

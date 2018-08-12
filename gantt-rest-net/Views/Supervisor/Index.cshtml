@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Thesis Management Software</title>
+    <meta name="description" content="website description" />
+    <meta name="keywords" content="website keywords, website keywords" />
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+    <link rel="stylesheet" type="text/css" href="~/style/style.css" title="style" />
+
+    <script src="~/Scripts/dhtmlxgantt/dhtmlxgantt.js"
+            type="text/javascript"></script>
+
+    <link rel="stylesheet"
+          href="~/Content/dhtmlxgantt/dhtmlxgantt_terrace.css" />
+
+    <style>
+        /** {
+            margin: 0;
+            padding: 0;
+        }
+
+        .table {
+            background-color: transparent;
+        }
+
+        #main, #logo, #menubar, #site_content, #footer {
+            margin-left: auto;
+            margin-right: auto;
+        }*/
+
+        #footer {
+            height: 33px;
+        }
+
+        .logout {
+            position: relative;
+            text-align: right;
+            margin: auto;
+            color: black;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="main">
+        <div id="header">
+            <div class="container-fluid">
+
+            </div>
+
+
+            <div class="logout">
+                <a style="color:white; font-size:medium" href=@Url.Action("Logout","Account")>Çıkış Yap</a>
+            </div>
+
+            <div id="logo">
+
+                <br /><br>
+                <h2 style="color:white; text-align:center">Dokuz Eylül Üniversitesi</h2>
+
+                <div id="logo_text">
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="site_content" style=" height:500px;">
+        <div id="content">
+
+            <div id="gantt_here" style="width:835px; height:330px;"></div>
+
+        </div>
+    </div>
+
+
+    @*@using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>groupTaskk</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }*@
+
+
+    <div id="content_footer"></div>
+    <div id="footer">
+        Copyright &copy; @*colour_blue*@
+    </div>
+
+</body>
+</html>
+
+
+<script>
+    (function () {
+        // specifying the date format
+        gantt.config.xml_date = "%Y-%m-%d %H:%i";
+        // initializing gantt
+        gantt.init("gantt_here");
+
+        // enabling data loading
+        gantt.load("/api/data");
+        // initializing dataProcessor
+        var dp = new gantt.dataProcessor("/api/data/");
+        // and attaching it to gantt
+        dp.init(gantt);
+        // setting the REST mode for dataProcessor
+        dp.setTransactionMode("REST");
+    })();
+</script>

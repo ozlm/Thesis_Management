@@ -1,0 +1,173 @@
+﻿@model IEnumerable<gantt_rest_net.Data.supListProject_Result>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thesis Management Software</title>
+    <meta name="description" content="website description" />
+    <meta name="keywords" content="website keywords, website keywords" />
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+    <link rel="stylesheet" type="text/css" href="~/style/style.css" title="style" />
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="~/Content/themes/new.css" rel="stylesheet" />
+    <link href="~/Content/themes/newmin.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/morris.css" rel="stylesheet" />
+    <link href="~/Content/themes/font.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .table {
+            background-color: transparent;
+        }
+
+        #main, #logo, #menubar, #site_content, #footer {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #footer {
+            height: 62px;
+        }
+
+        .logout {
+            position: relative;
+            text-align: right;
+            margin: auto;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+
+        <div id="header">
+
+            <div class="container-fluid">
+
+            </div>
+            <div class="logout">
+                <a style="color:white; font-size:medium" href=@Url.Action("Logout","Account")>Çıkış Yap</a>
+            </div>
+
+            <div id="logo">
+
+                <br /><br>
+                <h2 style="color:white; text-align:center">Dokuz Eylül Üniversitesi</h2>
+                
+                <div id="logo_text">
+
+                    <!-- class="logo_colour", allows you to change the colour of the text -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="site_content" style="    width: 898px;    height: 100%;">
+
+        <div id="content" style="height: 100%; margin-bottom: 100px">
+            <!-- insert the page content here -->
+
+            <table class="table" style=" width:837px; height:100%;">
+                <tr>
+                    <th>
+                        Öğrenci Adı
+                    </th>
+                    <th>
+                        Öğrenci Soyadı
+                    </th>
+
+                    <th>
+                        Proje Adı
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.studentName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.studentSurname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.projectName)
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">
+                                    Select
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("List", "Supervisor")">List Report</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("Index", "Supervisor", new { id = item.groupID }) ">Add Gant Chart</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <script>
+                                $(document).ready(function () {
+                                    $(".dropdown-toggle").dropdown();
+                                });
+                            </script>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div id="content_footer"></div>
+    <div id="footer">
+        Copyright &copy; @*colour_blue*@
+    </div>
+</body>
+</html>
+
+@*<script src="js/jquery.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Morris Charts JavaScript -->
+        <script src="js/plugins/morris/raphael.min.js"></script>
+        <script src="js/plugins/morris/morris.min.js"></script>
+        <script src="js/plugins/morris/morris-data.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>*@
+
+<script src="~/Content/themes/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Morris Charts JavaScript -->
+<script src="~/Content/themes/raphael.min.js"></script>
+<script src="Content/themes//morris/morris.min.js"></script>
+<script src="Content/themes/morris/morris-data.js"></script>
+
+<!-- /#wrapper -->
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Morris Charts JavaScript -->
+<script src="js/plugins/morris/raphael.min.js"></script>
+<script src="js/plugins/morris/morris.min.js"></script>
+<script src="js/plugins/morris/morris-data.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>

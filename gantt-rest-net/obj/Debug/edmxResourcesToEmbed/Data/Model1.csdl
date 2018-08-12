@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="gantt_rest_net.Models.GanttContextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="announcement">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int16" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="supervisorID" Type="Int16" Nullable="false" />
+    <Property Name="mesage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="versionID" Type="Int16" />
+    <NavigationProperty Name="supervisor" Relationship="Self.FK_announcement_supervisor" FromRole="announcement" ToRole="supervisor" />
+    <NavigationProperty Name="version" Relationship="Self.FK_announcement_version" FromRole="announcement" ToRole="version" />
+  </EntityType>
+  <EntityType Name="groups">
+    <Key>
+      <PropertyRef Name="groupID" />
+    </Key>
+    <Property Name="groupID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="studentID1" Type="Int16" Nullable="false" />
+    <Property Name="studentID2" Type="Int16" />
+    <Property Name="studentID3" Type="Int16" />
+    <Property Name="studentID4" Type="Int16" />
+    <Property Name="supervisorID" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="student" Relationship="Self.FK_group_student" FromRole="groups" ToRole="student" />
+    <NavigationProperty Name="student1" Relationship="Self.FK_group_student1" FromRole="groups" ToRole="student" />
+    <NavigationProperty Name="student2" Relationship="Self.FK_group_student2" FromRole="groups" ToRole="student" />
+    <NavigationProperty Name="student3" Relationship="Self.FK_group_student3" FromRole="groups" ToRole="student" />
+    <NavigationProperty Name="student4" Relationship="Self.FK_group_student4" FromRole="groups" ToRole="student" />
+    <NavigationProperty Name="supervisor" Relationship="Self.FK_group_supervisor" FromRole="groups" ToRole="supervisor" />
+    <NavigationProperty Name="projects" Relationship="Self.FK_projects_group" FromRole="groups" ToRole="projects" />
+  </EntityType>
+  <EntityType Name="groupTaskk">
+    <Key>
+      <PropertyRef Name="gID" />
+    </Key>
+    <Property Name="taskID" Type="Int32" Nullable="false" />
+    <Property Name="groupID" Type="Int16" Nullable="false" />
+    <Property Name="gID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Links">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="source" Type="Int32" Nullable="false" />
+    <Property Name="target" Type="Int32" Nullable="false" />
+    <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="projects">
+    <Key>
+      <PropertyRef Name="projectID" />
+    </Key>
+    <Property Name="projectID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="projectName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="groupID" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="groups" Relationship="Self.FK_projects_group" FromRole="projects" ToRole="groups" />
+  </EntityType>
+  <EntityType Name="report">
+    <Key>
+      <PropertyRef Name="reportID" />
+    </Key>
+    <Property Name="reportID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="reportName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="projectID" Type="Int16" Nullable="false" />
+    <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="updatedBy" Type="Int16" />
+    <NavigationProperty Name="student" Relationship="Self.FK_report_student" FromRole="report" ToRole="student" />
+  </EntityType>
+  <EntityType Name="student">
+    <Key>
+      <PropertyRef Name="studentID" />
+    </Key>
+    <Property Name="studentID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="studentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="studentSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="studentEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="studentPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="groups" Relationship="Self.FK_group_student" FromRole="student" ToRole="groups" />
+    <NavigationProperty Name="groups1" Relationship="Self.FK_group_student1" FromRole="student" ToRole="groups" />
+    <NavigationProperty Name="groups2" Relationship="Self.FK_group_student2" FromRole="student" ToRole="groups" />
+    <NavigationProperty Name="groups3" Relationship="Self.FK_group_student3" FromRole="student" ToRole="groups" />
+    <NavigationProperty Name="groups4" Relationship="Self.FK_group_student4" FromRole="student" ToRole="groups" />
+    <NavigationProperty Name="report" Relationship="Self.FK_report_student" FromRole="student" ToRole="report" />
+  </EntityType>
+  <EntityType Name="supervisor">
+    <Key>
+      <PropertyRef Name="supervisorID" />
+    </Key>
+    <Property Name="supervisorID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="supervisorEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="supervisorPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="supervisorName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="supervisorSurname" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="isAdmin" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="announcement" Relationship="Self.FK_announcement_supervisor" FromRole="supervisor" ToRole="announcement" />
+    <NavigationProperty Name="groups" Relationship="Self.FK_group_supervisor" FromRole="supervisor" ToRole="groups" />
+    <NavigationProperty Name="version" Relationship="Self.FK_version_supervisor" FromRole="supervisor" ToRole="version" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Tasks">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="start_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="duration" Type="Int32" Nullable="false" />
+    <Property Name="progress" Type="Double" Nullable="false" />
+    <Property Name="parent" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="version">
+    <Key>
+      <PropertyRef Name="versionID" />
+    </Key>
+    <Property Name="versionID" Type="Int16" Nullable="false" />
+    <Property Name="versionName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="dateofCreation" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="supervisorID" Type="Int16" Nullable="false" />
+    <Property Name="notificationofVersion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="announcement" Relationship="Self.FK_announcement_version" FromRole="version" ToRole="announcement" />
+    <NavigationProperty Name="supervisor" Relationship="Self.FK_version_supervisor" FromRole="version" ToRole="supervisor" />
+  </EntityType>
+  <Association Name="FK_announcement_supervisor">
+    <End Role="supervisor" Type="Self.supervisor" Multiplicity="1" />
+    <End Role="announcement" Type="Self.announcement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="supervisor">
+        <PropertyRef Name="supervisorID" />
+      </Principal>
+      <Dependent Role="announcement">
+        <PropertyRef Name="supervisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_announcement_version">
+    <End Role="version" Type="Self.version" Multiplicity="0..1" />
+    <End Role="announcement" Type="Self.announcement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="version">
+        <PropertyRef Name="versionID" />
+      </Principal>
+      <Dependent Role="announcement">
+        <PropertyRef Name="versionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_student">
+    <End Role="student" Type="Self.student" Multiplicity="1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="studentID1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_student1">
+    <End Role="student" Type="Self.student" Multiplicity="0..1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="studentID2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_student2">
+    <End Role="student" Type="Self.student" Multiplicity="0..1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="studentID3" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_student3">
+    <End Role="student" Type="Self.student" Multiplicity="0..1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="studentID4" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_student4">
+    <End Role="student" Type="Self.student" Multiplicity="0..1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="studentID2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_supervisor">
+    <End Role="supervisor" Type="Self.supervisor" Multiplicity="1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="supervisor">
+        <PropertyRef Name="supervisorID" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="supervisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_projects_group">
+    <End Role="groups" Type="Self.groups" Multiplicity="1" />
+    <End Role="projects" Type="Self.projects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="groups">
+        <PropertyRef Name="groupID" />
+      </Principal>
+      <Dependent Role="projects">
+        <PropertyRef Name="groupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_report_student">
+    <End Role="student" Type="Self.student" Multiplicity="0..1" />
+    <End Role="report" Type="Self.report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="report">
+        <PropertyRef Name="updatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_version_supervisor">
+    <End Role="supervisor" Type="Self.supervisor" Multiplicity="1" />
+    <End Role="version" Type="Self.version" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="supervisor">
+        <PropertyRef Name="supervisorID" />
+      </Principal>
+      <Dependent Role="version">
+        <PropertyRef Name="supervisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities7" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="announcement" EntityType="Self.announcement" />
+    <EntitySet Name="groups" EntityType="Self.groups" />
+    <EntitySet Name="groupTaskk" EntityType="Self.groupTaskk" />
+    <EntitySet Name="Links" EntityType="Self.Links" />
+    <EntitySet Name="projects" EntityType="Self.projects" />
+    <EntitySet Name="report" EntityType="Self.report" />
+    <EntitySet Name="student" EntityType="Self.student" />
+    <EntitySet Name="supervisor" EntityType="Self.supervisor" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Tasks" EntityType="Self.Tasks" />
+    <EntitySet Name="version" EntityType="Self.version" />
+    <AssociationSet Name="FK_announcement_supervisor" Association="Self.FK_announcement_supervisor">
+      <End Role="supervisor" EntitySet="supervisor" />
+      <End Role="announcement" EntitySet="announcement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_announcement_version" Association="Self.FK_announcement_version">
+      <End Role="version" EntitySet="version" />
+      <End Role="announcement" EntitySet="announcement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_student" Association="Self.FK_group_student">
+      <End Role="student" EntitySet="student" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_student1" Association="Self.FK_group_student1">
+      <End Role="student" EntitySet="student" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_student2" Association="Self.FK_group_student2">
+      <End Role="student" EntitySet="student" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_student3" Association="Self.FK_group_student3">
+      <End Role="student" EntitySet="student" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_student4" Association="Self.FK_group_student4">
+      <End Role="student" EntitySet="student" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_supervisor" Association="Self.FK_group_supervisor">
+      <End Role="supervisor" EntitySet="supervisor" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_projects_group" Association="Self.FK_projects_group">
+      <End Role="groups" EntitySet="groups" />
+      <End Role="projects" EntitySet="projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_report_student" Association="Self.FK_report_student">
+      <End Role="student" EntitySet="student" />
+      <End Role="report" EntitySet="report" />
+    </AssociationSet>
+    <AssociationSet Name="FK_version_supervisor" Association="Self.FK_version_supervisor">
+      <End Role="supervisor" EntitySet="supervisor" />
+      <End Role="version" EntitySet="version" />
+    </AssociationSet>
+    <FunctionImport Name="addGroup">
+      <Parameter Name="st1" Mode="In" Type="Int16" />
+      <Parameter Name="st2" Mode="In" Type="Int16" />
+      <Parameter Name="st3" Mode="In" Type="Int16" />
+      <Parameter Name="st4" Mode="In" Type="Int16" />
+      <Parameter Name="sup" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="addGroupTask">
+      <Parameter Name="groupId" Mode="In" Type="Int16" />
+      <Parameter Name="taskId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="addProject">
+      <Parameter Name="proName" Mode="In" Type="String" />
+      <Parameter Name="groupID" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="addStudent">
+      <Parameter Name="stuName" Mode="In" Type="String" />
+      <Parameter Name="stuSurname" Mode="In" Type="String" />
+      <Parameter Name="mail" Mode="In" Type="String" />
+      <Parameter Name="passwordd" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="addSupervisor">
+      <Parameter Name="mail" Mode="In" Type="String" />
+      <Parameter Name="passwordd" Mode="In" Type="String" />
+      <Parameter Name="supName" Mode="In" Type="String" />
+      <Parameter Name="supSurname" Mode="In" Type="String" />
+      <Parameter Name="isAdmin" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="deleteGroup">
+      <Parameter Name="groupID" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="deleteProject">
+      <Parameter Name="projectID" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="deleteStudent">
+      <Parameter Name="student_id" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="deleteSupervisor">
+      <Parameter Name="supID" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="deneme" ReturnType="Collection(gantt_rest_net.Models.GanttContextModel.deneme_Result)" />
+    <FunctionImport Name="findID" ReturnType="Collection(Int16)">
+      <Parameter Name="stuID" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="listedProject" ReturnType="Collection(gantt_rest_net.Models.GanttContextModel.listedProject_Result)" />
+    <FunctionImport Name="listReports" ReturnType="Collection(gantt_rest_net.Models.GanttContextModel.listReports_Result)">
+      <Parameter Name="groupsID" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="newsup" ReturnType="Collection(gantt_rest_net.Models.GanttContextModel.newsup_Result)">
+      <Parameter Name="supID" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="spFindName">
+      <Parameter Name="email" Mode="In" Type="String" />
+      <Parameter Name="student" Mode="InOut" Type="String" />
+      <Parameter Name="supervisor" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spname" ReturnType="Collection(Int16)">
+      <Parameter Name="mail" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="supdeneme" ReturnType="Collection(gantt_rest_net.Models.GanttContextModel.supdeneme_Result)">
+      <Parameter Name="supID" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="supListProject" ReturnType="Collection(gantt_rest_net.Models.GanttContextModel.supListProject_Result)">
+      <Parameter Name="supID" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="updateGroup">
+      <Parameter Name="st1" Mode="In" Type="Int16" />
+      <Parameter Name="st2" Mode="In" Type="Int16" />
+      <Parameter Name="st3" Mode="In" Type="Int16" />
+      <Parameter Name="st4" Mode="In" Type="Int16" />
+      <Parameter Name="supID" Mode="In" Type="Int16" />
+      <Parameter Name="groupID" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="updateProject">
+      <Parameter Name="pname" Mode="In" Type="String" />
+      <Parameter Name="groupID" Mode="In" Type="Int16" />
+      <Parameter Name="pID" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="updateStudent">
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="surname" Mode="In" Type="String" />
+      <Parameter Name="email" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+      <Parameter Name="studentID" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="updateSupervisor">
+      <Parameter Name="email" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="surname" Mode="In" Type="String" />
+      <Parameter Name="supID" Mode="In" Type="Int16" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="deneme_Result">
+    <Property Type="String" Name="studentName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="studentSurname" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="supervisorName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="supervisorSurname" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="projectName" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="listedProject_Result">
+    <Property Type="String" Name="studentName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="studentSurname" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="supervisorName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="supervisorSurname" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="projectName" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="listReports_Result">
+    <Property Type="String" Name="reportName" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="date" Nullable="false" Precision="23" />
+    <Property Type="String" Name="text" Nullable="false" MaxLength="Max" />
+  </ComplexType>
+  <ComplexType Name="newsup_Result">
+    <Property Type="Int16" Name="supervisorID" Nullable="false" />
+    <Property Type="String" Name="supervisorEmail" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="supervisorPassword" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="supervisorName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="supervisorSurname" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="isAdmin" Nullable="false" />
+    <Property Type="Int16" Name="groupID" Nullable="false" />
+    <Property Type="Int16" Name="studentID1" Nullable="false" />
+    <Property Type="Int16" Name="studentID2" Nullable="true" />
+    <Property Type="Int16" Name="studentID3" Nullable="true" />
+    <Property Type="Int16" Name="studentID4" Nullable="true" />
+    <Property Type="Int16" Name="supervisorID1" Nullable="false" />
+    <Property Type="Int16" Name="studentID" Nullable="false" />
+    <Property Type="String" Name="studentName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="studentSurname" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="studentEmail" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="studentPassword" Nullable="false" MaxLength="20" />
+    <Property Type="Int16" Name="projectID" Nullable="false" />
+    <Property Type="String" Name="projectName" Nullable="false" MaxLength="50" />
+    <Property Type="Int16" Name="groupID1" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="supdeneme_Result">
+    <Property Type="String" Name="studentName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="studentSurname" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="projectName" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="supListProject_Result">
+    <Property Type="String" Name="studentName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="studentSurname" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="projectName" Nullable="false" MaxLength="50" />
+    <Property Type="Int16" Name="groupID" Nullable="false" />
+  </ComplexType>
+</Schema>

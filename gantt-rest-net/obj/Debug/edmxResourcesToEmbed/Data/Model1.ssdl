@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="gantt_rest_net.Models.GanttContextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="announcement">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="smallint" Nullable="false" />
+    <Property Name="date" Type="date" Nullable="false" />
+    <Property Name="supervisorID" Type="smallint" Nullable="false" />
+    <Property Name="mesage" Type="text" />
+    <Property Name="versionID" Type="smallint" />
+  </EntityType>
+  <EntityType Name="groups">
+    <Key>
+      <PropertyRef Name="groupID" />
+    </Key>
+    <Property Name="groupID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="studentID1" Type="smallint" Nullable="false" />
+    <Property Name="studentID2" Type="smallint" />
+    <Property Name="studentID3" Type="smallint" />
+    <Property Name="studentID4" Type="smallint" />
+    <Property Name="supervisorID" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="groupTaskk">
+    <Key>
+      <PropertyRef Name="gID" />
+    </Key>
+    <Property Name="taskID" Type="int" Nullable="false" />
+    <Property Name="groupID" Type="smallint" Nullable="false" />
+    <Property Name="gID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Links">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="source" Type="int" Nullable="false" />
+    <Property Name="target" Type="int" Nullable="false" />
+    <Property Name="type" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="projects">
+    <Key>
+      <PropertyRef Name="projectID" />
+    </Key>
+    <Property Name="projectID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="projectName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="groupID" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="report">
+    <Key>
+      <PropertyRef Name="reportID" />
+    </Key>
+    <Property Name="reportID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="reportName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="projectID" Type="smallint" Nullable="false" />
+    <Property Name="text" Type="text" Nullable="false" />
+    <Property Name="updatedBy" Type="smallint" />
+  </EntityType>
+  <EntityType Name="student">
+    <Key>
+      <PropertyRef Name="studentID" />
+    </Key>
+    <Property Name="studentID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="studentName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="studentSurname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="studentEmail" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="studentPassword" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="supervisor">
+    <Key>
+      <PropertyRef Name="supervisorID" />
+    </Key>
+    <Property Name="supervisorID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="supervisorEmail" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="supervisorPassword" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="supervisorName" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="supervisorSurname" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="isAdmin" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tasks">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="text" Type="nvarchar(max)" />
+    <Property Name="start_date" Type="datetime" Nullable="false" />
+    <Property Name="duration" Type="int" Nullable="false" />
+    <Property Name="progress" Type="float" Nullable="false" />
+    <Property Name="parent" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="version">
+    <Key>
+      <PropertyRef Name="versionID" />
+    </Key>
+    <Property Name="versionID" Type="smallint" Nullable="false" />
+    <Property Name="versionName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="dateofCreation" Type="date" Nullable="false" />
+    <Property Name="supervisorID" Type="smallint" Nullable="false" />
+    <Property Name="notificationofVersion" Type="text" />
+  </EntityType>
+  <Association Name="FK_announcement_supervisor">
+    <End Role="supervisor" Type="Self.supervisor" Multiplicity="1" />
+    <End Role="announcement" Type="Self.announcement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="supervisor">
+        <PropertyRef Name="supervisorID" />
+      </Principal>
+      <Dependent Role="announcement">
+        <PropertyRef Name="supervisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_announcement_version">
+    <End Role="version" Type="Self.version" Multiplicity="0..1" />
+    <End Role="announcement" Type="Self.announcement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="version">
+        <PropertyRef Name="versionID" />
+      </Principal>
+      <Dependent Role="announcement">
+        <PropertyRef Name="versionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_student">
+    <End Role="student" Type="Self.student" Multiplicity="1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="studentID1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_student1">
+    <End Role="student" Type="Self.student" Multiplicity="0..1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="studentID2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_student2">
+    <End Role="student" Type="Self.student" Multiplicity="0..1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="studentID3" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_student3">
+    <End Role="student" Type="Self.student" Multiplicity="0..1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="studentID4" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_student4">
+    <End Role="student" Type="Self.student" Multiplicity="0..1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="studentID2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_supervisor">
+    <End Role="supervisor" Type="Self.supervisor" Multiplicity="1" />
+    <End Role="groups" Type="Self.groups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="supervisor">
+        <PropertyRef Name="supervisorID" />
+      </Principal>
+      <Dependent Role="groups">
+        <PropertyRef Name="supervisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_projects_group">
+    <End Role="groups" Type="Self.groups" Multiplicity="1" />
+    <End Role="projects" Type="Self.projects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="groups">
+        <PropertyRef Name="groupID" />
+      </Principal>
+      <Dependent Role="projects">
+        <PropertyRef Name="groupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_report_student">
+    <End Role="student" Type="Self.student" Multiplicity="0..1" />
+    <End Role="report" Type="Self.report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="student">
+        <PropertyRef Name="studentID" />
+      </Principal>
+      <Dependent Role="report">
+        <PropertyRef Name="updatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_version_supervisor">
+    <End Role="supervisor" Type="Self.supervisor" Multiplicity="1" />
+    <End Role="version" Type="Self.version" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="supervisor">
+        <PropertyRef Name="supervisorID" />
+      </Principal>
+      <Dependent Role="version">
+        <PropertyRef Name="supervisorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="addGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="st1" Type="smallint" Mode="In" />
+    <Parameter Name="st2" Type="smallint" Mode="In" />
+    <Parameter Name="st3" Type="smallint" Mode="In" />
+    <Parameter Name="st4" Type="smallint" Mode="In" />
+    <Parameter Name="sup" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="addGroupTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="groupId" Type="smallint" Mode="In" />
+    <Parameter Name="taskId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="addProject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="proName" Type="varchar" Mode="In" />
+    <Parameter Name="groupID" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="addStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="stuName" Type="varchar" Mode="In" />
+    <Parameter Name="stuSurname" Type="varchar" Mode="In" />
+    <Parameter Name="mail" Type="varchar" Mode="In" />
+    <Parameter Name="passwordd" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="addSupervisor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="mail" Type="varchar" Mode="In" />
+    <Parameter Name="passwordd" Type="varchar" Mode="In" />
+    <Parameter Name="supName" Type="varchar" Mode="In" />
+    <Parameter Name="supSurname" Type="varchar" Mode="In" />
+    <Parameter Name="isAdmin" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="deleteGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="groupID" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="deleteProject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="projectID" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="deleteStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="student_id" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="deleteSupervisor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="supID" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="deneme" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="findID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="stuID" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="listedProject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="listReports" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="groupsID" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="newsup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="supID" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="spFindName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="student" Type="varchar" Mode="InOut" />
+    <Parameter Name="supervisor" Type="varchar" Mode="InOut" />
+  </Function>
+  <Function Name="spname" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="mail" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="supdeneme" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="supID" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="supListProject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="supID" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="updateGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="st1" Type="smallint" Mode="In" />
+    <Parameter Name="st2" Type="smallint" Mode="In" />
+    <Parameter Name="st3" Type="smallint" Mode="In" />
+    <Parameter Name="st4" Type="smallint" Mode="In" />
+    <Parameter Name="supID" Type="smallint" Mode="In" />
+    <Parameter Name="groupID" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="updateProject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="pname" Type="varchar" Mode="In" />
+    <Parameter Name="groupID" Type="smallint" Mode="In" />
+    <Parameter Name="pID" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="updateStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="surname" Type="varchar" Mode="In" />
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+    <Parameter Name="studentID" Type="smallint" Mode="In" />
+  </Function>
+  <Function Name="updateSupervisor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="email" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="surname" Type="varchar" Mode="In" />
+    <Parameter Name="supID" Type="smallint" Mode="In" />
+  </Function>
+  <EntityContainer Name="gantt_rest_netModelsGanttContextModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="announcement" EntityType="Self.announcement" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="groups" EntityType="Self.groups" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="groupTaskk" EntityType="Self.groupTaskk" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Links" EntityType="Self.Links" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="projects" EntityType="Self.projects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="report" EntityType="Self.report" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="student" EntityType="Self.student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="supervisor" EntityType="Self.supervisor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="version" EntityType="Self.version" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_announcement_supervisor" Association="Self.FK_announcement_supervisor">
+      <End Role="supervisor" EntitySet="supervisor" />
+      <End Role="announcement" EntitySet="announcement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_announcement_version" Association="Self.FK_announcement_version">
+      <End Role="version" EntitySet="version" />
+      <End Role="announcement" EntitySet="announcement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_student" Association="Self.FK_group_student">
+      <End Role="student" EntitySet="student" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_student1" Association="Self.FK_group_student1">
+      <End Role="student" EntitySet="student" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_student2" Association="Self.FK_group_student2">
+      <End Role="student" EntitySet="student" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_student3" Association="Self.FK_group_student3">
+      <End Role="student" EntitySet="student" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_student4" Association="Self.FK_group_student4">
+      <End Role="student" EntitySet="student" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_supervisor" Association="Self.FK_group_supervisor">
+      <End Role="supervisor" EntitySet="supervisor" />
+      <End Role="groups" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_projects_group" Association="Self.FK_projects_group">
+      <End Role="groups" EntitySet="groups" />
+      <End Role="projects" EntitySet="projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_report_student" Association="Self.FK_report_student">
+      <End Role="student" EntitySet="student" />
+      <End Role="report" EntitySet="report" />
+    </AssociationSet>
+    <AssociationSet Name="FK_version_supervisor" Association="Self.FK_version_supervisor">
+      <End Role="supervisor" EntitySet="supervisor" />
+      <End Role="version" EntitySet="version" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
